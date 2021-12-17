@@ -9,6 +9,8 @@ from .miband import Miband
 def call_quick(mac: str, auth: str) -> None:
     while True :
         try:
+            # Convert Auth Key from hex to byte format
+            auth = bytes.fromhex(auth)
             band = Miband(mac, debug=True)
             band.send_custom_alert(3, auth, "test")
             band.waitForNotifications(10)
