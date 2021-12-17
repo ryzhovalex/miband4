@@ -1,23 +1,26 @@
-import sys,os,time
-import logging
-from bluepy.btle import Peripheral, DefaultDelegate, ADDR_TYPE_RANDOM,ADDR_TYPE_PUBLIC, BTLEException
-from constants import UUIDS, AUTH_STATES, ALERT_TYPES, QUEUE_TYPES, MUSICSTATE
+import os
+import sys
+import time
 import struct
+import logging
 from datetime import datetime, timedelta
+
+from bluepy.btle import Peripheral, DefaultDelegate, ADDR_TYPE_RANDOM,ADDR_TYPE_PUBLIC, BTLEException
 from Crypto.Cipher import AES
-from datetime import datetime
 try:
     import zlib
 except ImportError:
     print("zlib module not found. Updating watchface/firmware requires zlib")
 try:
-    from Queue import Queue, Empty
+    from Queue import Queue, Empty  # type: ignore
 except ImportError:
-    from queue import Queue, Empty
+    from queue import Queue, Empty  # type: ignore
 try:
-    xrange
+    xrange  # type: ignore
 except NameError:
     xrange = range
+
+from .constants import UUIDS, AUTH_STATES, ALERT_TYPES, QUEUE_TYPES, MUSICSTATE
 
 
 class Delegate(DefaultDelegate):
@@ -134,7 +137,7 @@ class Delegate(DefaultDelegate):
                     self.device._default_music_vdown()
 
 
-class miband(Peripheral):
+class Miband(Peripheral):
     _send_rnd_cmd = struct.pack('<2s', b'\x02\x00')
     _send_enc_key = struct.pack('<2s', b'\x03\x00')
     def __init__(self, mac_address,key=None, timeout=0.5, debug=False):

@@ -1,7 +1,6 @@
-auth_key.txt
-tester.py
-test.py
+creds
 .vscode/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
