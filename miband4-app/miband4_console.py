@@ -17,24 +17,20 @@ from .miband import Miband
     
 class MiConsole:
     def __init__(self, mac: str, auth: str) -> None:
-        raw_auth = auth
-        auth = bytes()
-
         # Validate auth key.
-        if raw_auth:
-            if 1 < len(raw_auth) != 32:
+        if auth:
+            if 1 < len(auth) != 32:
                 print("Error:")
                 print("  Your AUTH KEY length is not 32, please check the format")
                 print("  Example of the Auth Key: 8fa9b42078627a654d22beff985655db")
                 exit(1)
 
-        # Convert Auth Key from hex to byte format
-        auth = bytes.fromhex(raw_auth)
+        bytes_auth: bytes = bytes.fromhex(auth)
 
         success = False
         while not success:
             try:
-                self.band = Miband(mac, auth, debug=True)
+                self.band = Miband(mac, bytes_auth, debug=True)
                 success = self.band.initialize()
                 break
             except BTLEDisconnectError:
@@ -104,7 +100,7 @@ class MiConsole:
         print ('Latest heart rate is : %i' % self.band.get_heart_rate_one_time())
         input('Press a key to continue')
 
-    def heart_logger(data):
+    def heart_logger(self, data):
         print ('Realtime heart BPM:', data)
 
     def get_realtime(self):

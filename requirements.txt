@@ -1,3 +1,4 @@
 bluepy
 pycryptodome  # Works instead of `pycrypto`.
 curses-menu
+staze==0.1.3

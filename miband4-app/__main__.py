@@ -16,7 +16,7 @@ def main() -> None:
         mac, auth = file.readline().strip().split(";")
 
     if mode == "q":
-        call_quick(mac, auth)
+        call_quick(mac)
     elif mode == "c":
         MiConsole(mac, auth)
 
